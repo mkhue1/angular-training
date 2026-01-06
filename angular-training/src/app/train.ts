@@ -4,6 +4,7 @@ import {people, person, gender} from "./ts-playground";
 @Component({
   selector: 'app-train',
   imports:[CommonModule],
+  standalone: true,
   templateUrl: './train.html',
 })
 export class TrainComponent{

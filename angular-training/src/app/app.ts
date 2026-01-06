@@ -1,12 +1,17 @@
 import { Component, signal } from '@angular/core';
-import { TrainComponent } from './train';
+import { RouterOutlet, RouterLink, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [TrainComponent],
+  imports: [RouterOutlet],
+  standalone: true,
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
+  constructor(private router: Router) {}
+  change() {
+    this.router.navigate(['/train'])
+  }
 }
 
