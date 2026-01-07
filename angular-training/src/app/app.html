@@ -1,2 +1,14 @@
-<button *ngIf = "showButton" type="button" class="btn btn-primary" (click)="change()">Click me</button>
+<nav class="navbar navbar-expand navbar-light bg-light">
+  <span class="navbar-brand mb-0 h1">Navbar</span>
+
+  <ul class="navbar-nav ms-3 d-flex flex-row">
+    <li class="nav-item me-3">
+      <a class="nav-link" (click)="navigateTodo()">Todo app</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="navigateTrain()">Train</a>
+    </li>
+  </ul>
+</nav>
+
 <router-outlet></router-outlet>

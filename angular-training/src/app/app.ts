@@ -10,11 +10,12 @@ import { RouterOutlet, RouterLink, Router } from '@angular/router';
   styleUrl: './app.css'
 })
 export class App {
-  showButton = true;
   constructor(private router: Router) {}
-  change() {
-    this.showButton = false;
+  navigateTodo() {
     this.router.navigate(['/todo'])
+  }
+  navigateTrain(){
+    this.router.navigate(['/train'])
   }
 }
 
