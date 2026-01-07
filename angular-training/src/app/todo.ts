@@ -1,42 +1,66 @@
-import { Component, inject} from "@angular/core"
+import { ChangeDetectorRef, Component, inject} from "@angular/core"
 import {CommonModule} from '@angular/common';
-import { ReactiveFormsModule, Validators, FormBuilder } from "@angular/forms";
+import { ReactiveFormsModule, Validators, FormGroup, FormControl } from "@angular/forms";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatSelectModule} from '@angular/material/select';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { AddTodoSheetComponent } from "./add-todo-sheet/add-todo-sheet";
 
 interface todoItem{
     content: string,
-    completed: boolean
+    completed: boolean,
+    priority: "High" | "Medium" | "Low",
+    dueDate: Date
 }
 
 @Component({
   selector: 'app-todo',
   standalone: true,
   templateUrl: './todo.html',
-  imports: [CommonModule, ReactiveFormsModule],
-  styleUrl: './todo.css'
+  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatBottomSheetModule],
+  styleUrl: './todo.css',
 })
 export class TodoComponent{
-    todoList : todoItem[] = [];
+    todoList : any[] = [];
+    submitted = false;
+    showForm = false;
+    minDate: Date;
+
+    private bottomSheet = inject(MatBottomSheet);
+
+    constructor(private cdr: ChangeDetectorRef) {
+        this.minDate = new Date();
+        this.minDate.setHours(0, 0, 0, 0);
+    }
     toggleDone (id:number) {
         this.todoList.map((v, i) => {if (i == id) v.completed = !v.completed;
             return v;
         })
     }
-    private formBuilder = inject(FormBuilder);
-    todoForm = this.formBuilder.group({
-        task: ['', Validators.required],
-        completed: ['']
-        }
-    )
 
-    addTodo() {
-        if (this.todoForm.invalid) return;
+    openBottomSheet() {
+        console.log('123');
+        this.bottomSheet
+            .open(AddTodoSheetComponent)
+            .afterDismissed()
+            .subscribe(result => {
+        console.log('ressult', result);
 
-        this.todoList.push({
-        content: this.todoForm.value.task!,
-        completed: false
+        if (!result) return;
+
+            this.todoList = [
+                ...this.todoList,
+                {
+                content: result.task,
+                completed: false,
+                priority: result.priority,
+                dueDate: result.dueDate
+                }
+            ];
         });
-
-        this.todoForm.reset();
     }
 
     deleteTodo(index: number) {

@@ -1,14 +1,7 @@
 <div class="todos">
-    <form [formGroup]="todoForm" (ngSubmit)="addTodo()">
-        <input 
-			type="text"
-			placeholder="Enter todo..."
-			class="todo-input"
-			formControlName="task"
-		/>
-        <div *ngIf="todoForm.get('task')?.hasError('required')"> Task is required </div>
-        <input type="submit" value="Add todo" class="todo-submit" [disabled]="todoForm.invalid">
-    </form>
+
+    <button type="button" class="todo-submit" (click) = openBottomSheet()>Add todo</button>
+
     <div>Active todo : {{activeTodo()}}</div>
     <div>Remain todo : {{doneTodo()}}</div>
     <table class = "table table-bordered align-middle">
@@ -16,14 +9,17 @@
             <tr>
             <th>ID</th>
             <th>Task name</th>
-            <th>Remove button</th>
+            <th>Priority</th>
+            <th>Due date</th>
             </tr>
         </thead>
-
+        <pre>{{todoList | json}}</pre>
         <tbody>
             <tr class="todo {{ (todo.completed ? 'done' : '') }}" *ngFor="let todo of todoList; let i = index">
             <td>{{ i + 1 }}</td>
             <td><div class="content" (click)="toggleDone(i)">{{ todo.content }}</div></td>
+            <td>{{ todo.priority}}</td>
+            <td>{{todo.dueDate | date:'dd-MM-yyyy'}}</td>
             <td><button class="btn btn-danger btn-sm" (click)="deleteTodo(i)"> Remove</button></td>
             </tr>
         </tbody>
