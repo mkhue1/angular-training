@@ -1,6 +1,6 @@
 import { Component } from "@angular/core"
 import {CommonModule} from '@angular/common';
-import {people, person, gender} from "./ts-playground";
+import {people, person, gender} from "../../ts-playground";
 @Component({
   selector: 'app-train',
   imports:[CommonModule],

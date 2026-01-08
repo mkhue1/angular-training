@@ -2,8 +2,8 @@
 
     <button type="button" class="todo-submit" (click) = openBottomSheet()>Add todo</button>
 
-    <div>Active todo : {{activeTodo()}}</div>
-    <div>Remain todo : {{doneTodo()}}</div>
+    <div>Active todo : {{activeCount}}</div>
+    <div>Remain todo : {{doneCount}}</div>
     <table class = "table table-bordered align-middle">
         <thead>
             <tr>
@@ -13,7 +13,6 @@
             <th>Due date</th>
             </tr>
         </thead>
-        <pre>{{todoList | json}}</pre>
         <tbody>
             <tr class="todo {{ (todo.completed ? 'done' : '') }}" *ngFor="let todo of todoList; let i = index">
             <td>{{ i + 1 }}</td>
