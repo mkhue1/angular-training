@@ -1,13 +1,15 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MatDialogRef, MatDialogModule, MatDialogActions } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { todoItem } from '../todo/todo';
 
 @Component({
   selector: 'app-add-todo-sheet',
@@ -20,36 +22,50 @@ import { MatButtonModule } from '@angular/material/button';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule,
   ],
   templateUrl: './add-todo-sheet.html',
   styleUrl: './add-todo-sheet.css',
 })
 export class AddTodoSheetComponent {
   minDate : Date;
-  constructor() {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: todoItem) {
         this.minDate = new Date();
         this.minDate.setHours(0, 0, 0, 0);
     }
-  private sheetRef = inject(MatBottomSheetRef<AddTodoSheetComponent>);
-
+  private sheetRef = inject(MatDialogRef<AddTodoSheetComponent>);
   todoForm = new FormGroup({
-    task: new FormControl('', Validators.required),
-    priority: new FormControl('', Validators.required),
+    content: new FormControl('', Validators.required),
+    completed: new FormControl(false),
+    priority: new FormControl('' as "High" | "Medium" | "Low", Validators.required),
     dueDate: new FormControl(new Date(), Validators.required)
   });
 
+  ngOnInit() {
+  if (this.data != null) {
+    this.todoForm.patchValue({
+      content: this.data.content,
+      completed: this.data.completed,
+      priority: this.data.priority,
+      dueDate: this.data.dueDate
+      });
+    }
+  }
+
+
   submit() {
     if (this.todoForm.invalid) return;
-
-    this.sheetRef.dismiss({
-      task: this.todoForm.value.task,
-      priority: this.todoForm.value.priority,
-      dueDate: this.todoForm.value.dueDate
-    });
+    const newTodo = {
+      content: this.todoForm.value.content!,
+      completed: this.todoForm.value.completed!,
+      priority: this.todoForm.value.priority!,
+      dueDate: this.todoForm.value.dueDate!
+    };
+    this.sheetRef.close(newTodo);
   }
 
   cancel() {
-    this.sheetRef.dismiss();
+    this.sheetRef.close();
   }
 }

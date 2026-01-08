@@ -1,9 +1,15 @@
 <div class="todos">
+    <div class="todo-stats">
+        <div class="stat active">
+            <span class="label">Active</span>
+            <span class="value">{{ activeCount }}</span>
+        </div>
 
-    <button type="button" class="todo-submit" (click) = openBottomSheet()>Add todo</button>
-
-    <div>Active todo : {{activeCount}}</div>
-    <div>Remain todo : {{doneCount}}</div>
+        <div class="stat done">
+            <span class="label">Done</span>
+            <span class="value">{{ doneCount }}</span>
+        </div>
+    </div>
     <table class = "table table-bordered align-middle">
         <thead>
             <tr>
@@ -19,8 +25,11 @@
             <td><div class="content" (click)="toggleDone(i)">{{ todo.content }}</div></td>
             <td>{{ todo.priority}}</td>
             <td>{{todo.dueDate | date:'dd-MM-yyyy'}}</td>
-            <td><button class="btn btn-danger btn-sm" (click)="deleteTodo(i)"> Remove</button></td>
+            <td><button class="btn btn-danger btn-sm" (click)="deleteTodo(i)"> <mat-icon>delete</mat-icon></button></td>
+            <td><button class="btn btn-danger btn-light" (click)="editTodo(i)"> <mat-icon>edit</mat-icon></button></td>
             </tr>
         </tbody>
     </table>
+    <button type="button" class="todo-submit" (click) = openBottomSheet()><mat-icon>add</mat-icon></button>
 </div>
+

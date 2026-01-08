@@ -54,3 +54,33 @@
 	font-size: 18px;
 	font-weight: 700;
 }
+
+.todo-stats {
+  display: flex;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.stat {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: #f5f5f5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+}
+
+.stat .value {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.stat.active {
+  border-left: 5px solid #1976d2;
+}
+
+.stat.done {
+  border-left: 5px solid #2e7d32;
+}
