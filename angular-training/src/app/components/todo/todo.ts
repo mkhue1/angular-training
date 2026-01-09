@@ -60,7 +60,10 @@ export class TodoComponent{
         });
     }
 
-
+    duplicateTodo (index:number){
+        const duplicateTodo = this.todoList[index]
+        this.todoList.push(duplicateTodo)
+    }
 
     deleteTodo(index: number) {
         this.todoList.splice(index, 1);

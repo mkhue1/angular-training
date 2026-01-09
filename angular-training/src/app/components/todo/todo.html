@@ -25,8 +25,9 @@
             <td><div class="content" (click)="toggleDone(i)">{{ todo.content }}</div></td>
             <td>{{ todo.priority}}</td>
             <td>{{todo.dueDate | date:'dd-MM-yyyy'}}</td>
-            <td><button class="btn btn-danger btn-sm" (click)="deleteTodo(i)"> <mat-icon>delete</mat-icon></button></td>
             <td><button class="btn btn-danger btn-light" (click)="editTodo(i)"> <mat-icon>edit</mat-icon></button></td>
+            <td><button class="btn btn-danger btn-sm" (click)="deleteTodo(i)"> <mat-icon>delete</mat-icon></button></td>
+            <td><button class="btn btn-danger btn-light" (click)="duplicateTodo(i)"> Dupliate</button></td>
             </tr>
         </tbody>
     </table>
