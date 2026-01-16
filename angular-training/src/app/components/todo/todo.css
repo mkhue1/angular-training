@@ -84,3 +84,16 @@
 .stat.done {
   border-left: 5px solid #2e7d32;
 }
+
+.filter-search {
+  height: 40px;
+
+  padding: 8px 14px;
+  font-size: 14px;
+
+  border: 1.5px solid #d0d7de;
+  border-radius: 8px;
+
+  background-color: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}

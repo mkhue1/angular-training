@@ -2,13 +2,36 @@
     <div class="todo-stats">
         <div class="stat active">
             <span class="label">Active</span>
-            <span class="value">{{ activeCount }}</span>
+            <span class="value">{{ activeCount() }}</span>
         </div>
 
         <div class="stat done">
             <span class="label">Done</span>
-            <span class="value">{{ doneCount }}</span>
+            <span class="value">{{ doneCount() }}</span>
         </div>
+      <input
+        type="text"
+        placeholder="Search todo..."
+        class="filter-search"
+        (input)="searchText.set($any($event.target).value)"
+      />
+        <select
+          class="form-select"
+          (change)="statusFilter.set($any($event.target).value)"
+        >
+          <option value="all">All</option>
+          <option value="active">Active</option>
+          <option value="done">Done</option>
+        </select>
+      <select
+        class="form-select"
+        (change)="priorityFilter.set($any($event.target).value)"
+      >
+        <option value="ALL">All priority</option>
+        <option value="HIGH">High</option>
+        <option value="MEDIUM">Medium</option>
+        <option value="LOW">Low</option>
+      </select>
     </div>
     <table class = "table table-bordered align-middle">
         <thead>
@@ -20,14 +43,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="todo {{ (todo.completed ? 'done' : '') }}" *ngFor="let todo of todoList; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td><div class="content" (click)="toggleDone(i)">{{ todo.content }}</div></td>
+            <tr class="todo {{ (todo.completed ? 'done' : '') }}" *ngFor="let todo of filteredTodos(), let i = index">
+            <td>{{ i + 1}}</td>
+            <td><div class="content" (click)="toggleDone(todo.id!)">{{ todo.title }}</div></td>
             <td>{{ todo.priority}}</td>
-            <td>{{todo.dueDate | date:'dd-MM-yyyy'}}</td>
-            <td><button class="btn btn-danger btn-light" (click)="editTodo(i)"> <mat-icon>edit</mat-icon></button></td>
-            <td><button class="btn btn-danger btn-sm" (click)="deleteTodo(i)"> <mat-icon>delete</mat-icon></button></td>
-            <td><button class="btn btn-danger btn-light" (click)="duplicateTodo(i)"> Dupliate</button></td>
+            <td>{{todo.date | date:'dd-MM-yyyy'}}</td>
+            <td><button class="btn btn-danger btn-light" (click)="editTodo(todo.id!)"> <mat-icon>edit</mat-icon></button></td>
+            <td><button class="btn btn-danger btn-sm" (click)="deleteTodo(todo.id!)"> <mat-icon>delete</mat-icon></button></td>
+            <td><button class="btn btn-danger btn-light" (click)="duplicateTodo(todo.id!)"> Duplicate</button></td>
             </tr>
         </tbody>
     </table>
