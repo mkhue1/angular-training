@@ -1,9 +1,33 @@
-<div class = "layout">
-  <mat-nav-list class = "sidebar">
-    <a mat-list-item (click)="navigateTodo()">Todo app</a>
-    <a mat-list-item (click)="navigateTrain()">Train</a>
-  </mat-nav-list>
-  <div class="content">
-    <router-outlet></router-outlet>
+@if(!loggedIn()){
+  <div class="login-page">
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>User name</mat-label>
+        <input matInput formControlName="userName" />
+        <mat-error *ngIf="loginForm.get('userName')?.hasError('required')">User name is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="passWord" />
+        <mat-error *ngIf="loginForm.get('passWord')?.hasError('required')">Pass word is required</mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid"> Log in </button>
+    </form>
   </div>
-</div>
+}
+
+
+@if(loggedIn()){
+  <div class = "layout">
+    <mat-nav-list class = "sidebar">
+      <a mat-list-item (click)="navigateTodo()">Todo app</a>
+      <a mat-list-item (click)="navigateTrain()">Train</a>
+    </mat-nav-list>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+}
+
