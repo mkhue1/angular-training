@@ -51,7 +51,6 @@ export class AddTodoSheetComponent implements OnInit{
       priority: this.todoForm.value.priority!,
       date: this.todoForm.value.date!
     };
-    console.log("Save")
     this.sheetRef.close(newTodo);
   }
 

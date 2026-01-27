@@ -33,3 +33,28 @@
   width: 100%;
 }
 
+.register {
+  display: block;
+  margin-top: 12px;
+  text-align: center;
+
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+
+  color: #1976d2;
+}
+
+.register-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-form {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

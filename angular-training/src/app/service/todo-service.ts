@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {todoApiRequest, todoItem, todoApiResponse} from './components/todo/todo';
+import {todoApiRequest, todoItem, todoApiResponse} from '../components/todo/todo';
 import {inject} from '@angular/core';
 
 

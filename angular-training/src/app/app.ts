@@ -1,4 +1,4 @@
-import { Component, inject} from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router } from '@angular/router';
 import {MatListModule} from '@angular/material/list';
@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from './auth-service';
+import { AuthService } from './service/auth-service';
 
 
 @Component({
@@ -30,16 +30,37 @@ export class App {
   private http = inject(HttpClient);
   private auth = inject(AuthService)
   loggedIn = this.auth.loggedIn;
-  navigateTodo() {
-    this.router.navigate(['/todo'])
+  registered = false
+  navigateRegister(){
+    this.registered = true
   }
-  navigateTrain(){
-    this.router.navigate(['/train'])
+  navigateTodo() {
+    this.router.navigate(["/todo"])
   }
   loginForm = new FormGroup({
     userName: new FormControl('', Validators.required),
     passWord : new FormControl('', Validators.required)
   });
+  registerForm = new FormGroup({
+    userName: new FormControl('', Validators.required),
+    passWord : new FormControl('', Validators.required),
+  });
+  register(){
+    if (this.registerForm.invalid) return;
+
+    const { userName, passWord } = this.registerForm.value;
+
+    this.http.post<any>('http://localhost:8080/auth/register', {
+      username: userName,
+      password: passWord
+    }).subscribe({
+      next: res => {
+        this.auth.setToken(res.accessToken);
+        this.router.navigate(["/todo"])
+      },
+      error: () => alert('Register failed')
+    });
+  }
   login() {
     if (this.loginForm.invalid) return;
 
@@ -51,7 +72,7 @@ export class App {
     }).subscribe({
       next: res => {
         this.auth.setToken(res.accessToken);
-        console.log(this.auth.isLoggedIn())
+        this.router.navigate(["/todo"])
       },
       error: () => alert('Login failed')
     });

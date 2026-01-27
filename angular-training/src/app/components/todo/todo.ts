@@ -8,7 +8,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {AddTodoSheetComponent} from "../add-todo-sheet/add-todo-sheet";
 import {MatIconModule} from '@angular/material/icon';
-import {TodoService} from '../../todo-service';
+import {TodoService} from '../../service/todo-service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 export interface todoItem{
