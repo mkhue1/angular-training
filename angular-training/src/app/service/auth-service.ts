@@ -1,4 +1,5 @@
 import { Injectable, signal } from '@angular/core';
+import { jwtDecode } from "jwt-decode";
 
 @Injectable({
   providedIn: 'root',
@@ -27,5 +28,17 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return !!this.getToken();
+  }
+
+  getRole(): string | null {
+    const token = localStorage.getItem('access_token');
+    if (!token) return null;
+
+    const decoded: any = jwtDecode(token);
+    return decoded.role;
+  }
+
+  isAdmin(): boolean {
+    return this.getRole() === 'ROLE_ADMIN';
   }
 }

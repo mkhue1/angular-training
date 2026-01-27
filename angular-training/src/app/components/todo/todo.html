@@ -48,9 +48,11 @@
             <td><div class="content" (click)="toggleDone(todo.id!)">{{ todo.title }}</div></td>
             <td>{{ todo.priority}}</td>
             <td>{{todo.date | date:'dd-MM-yyyy'}}</td>
-            <td><button class="btn btn-danger btn-light" (click)="editTodo(todo.id!)"> <mat-icon>edit</mat-icon></button></td>
-            <td><button class="btn btn-danger btn-sm" (click)="deleteTodo(todo.id!)"> <mat-icon>delete</mat-icon></button></td>
-            <td><button class="btn btn-danger btn-light" (click)="duplicateTodo(todo.id!)"> Duplicate</button></td>
+              @if (auth.isAdmin()){
+                <td><button class="btn btn-danger btn-light" (click)="editTodo(todo.id!)"> <mat-icon>edit</mat-icon></button></td>
+                <td><button class="btn btn-danger btn-sm" (click)="deleteTodo(todo.id!)"> <mat-icon>delete</mat-icon></button></td>
+                <td><button class="btn btn-danger btn-light" (click)="duplicateTodo(todo.id!)"> Duplicate</button></td>
+              }
             </tr>
         </tbody>
     </table>

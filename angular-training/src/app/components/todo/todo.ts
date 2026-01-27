@@ -10,6 +10,7 @@ import {AddTodoSheetComponent} from "../add-todo-sheet/add-todo-sheet";
 import {MatIconModule} from '@angular/material/icon';
 import {TodoService} from '../../service/todo-service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {AuthService} from '../../service/auth-service';
 
 export interface todoItem{
   id?: number;
@@ -52,6 +53,7 @@ export interface todoApiResponse {
   styleUrl: './todo.css',
 })
 export class TodoComponent implements OnInit{
+  auth = inject(AuthService);
   todoList = signal<todoItem[]>([]);
 
   activeCount = computed(() => this.todoList().filter(t => !t.completed).length);
@@ -141,6 +143,11 @@ export class TodoComponent implements OnInit{
       this.todoService.deleteTodo(id).subscribe(() => {
         this.todoList.update(list =>
           list.filter(todo => todo.id !== id)
+        );
+        this.snackBar.open(
+          'Delete successfully ✅',
+          'OK',
+          { duration: 3000, horizontalPosition: 'right', verticalPosition: 'top' }
         );
       });
     }

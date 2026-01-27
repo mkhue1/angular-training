@@ -4,14 +4,14 @@
       <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>User name</mat-label>
-          <input matInput formControlName="userName" />
-          <mat-error *ngIf="loginForm.get('userName')?.hasError('required')">User name is required</mat-error>
+          <input matInput formControlName="username" />
+          <mat-error *ngIf="loginForm.get('username')?.hasError('required')">User name is required</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Password</mat-label>
-          <input matInput type="password" formControlName="passWord" />
-          <mat-error *ngIf="loginForm.get('passWord')?.hasError('required')">Pass word is required</mat-error>
+          <input matInput type="password" formControlName="password" />
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Pass word is required</mat-error>
         </mat-form-field>
 
         <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid"> Log in </button>
@@ -24,17 +24,18 @@
       <form class="register-form" [formGroup]="registerForm" (ngSubmit)="register()">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>User name</mat-label>
-          <input matInput formControlName="userName" />
-          <mat-error *ngIf="registerForm.get('userName')?.hasError('required')">User name is required</mat-error>
+          <input matInput formControlName="username" />
+          <mat-error *ngIf="registerForm.get('username')?.hasError('required')">User name is required</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Password</mat-label>
-          <input matInput type="password" formControlName="passWord" />
-          <mat-error *ngIf="registerForm.get('passWord')?.hasError('required')">Pass word is required</mat-error>
+          <input matInput type="password" formControlName="password" />
+          <mat-error *ngIf="registerForm.get('password')?.hasError('required')">Pass word is required</mat-error>
         </mat-form-field>
 
         <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid"> Register </button>
+        <a class = "register" (click)="navigateLogIn()"> <- Back to log in</a>
       </form>
     </div>
   }
@@ -45,6 +46,7 @@
   <div class = "layout">
     <mat-nav-list class = "sidebar">
       <a mat-list-item (click)="navigateTodo()">Todo app</a>
+      <span class="spacer"></span>
       <a mat-list-item (click)="logout()">Logout</a>
     </mat-nav-list>
     <div class="content">

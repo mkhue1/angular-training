@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router } from '@angular/router';
 import {MatListModule} from '@angular/material/list';
@@ -33,45 +33,55 @@ export class App {
   registered = false
   navigateRegister(){
     this.registered = true
+    this.loginForm.reset();
+    this.registerForm.reset();
+  }
+  navigateLogIn(){
+    this.registered = false
+    this.loginForm.reset();
+    this.registerForm.reset();
   }
   navigateTodo() {
     this.router.navigate(["/todo"])
   }
   loginForm = new FormGroup({
-    userName: new FormControl('', Validators.required),
-    passWord : new FormControl('', Validators.required)
+    username: new FormControl('', Validators.required),
+    password : new FormControl('', Validators.required)
   });
   registerForm = new FormGroup({
-    userName: new FormControl('', Validators.required),
-    passWord : new FormControl('', Validators.required),
+    username: new FormControl('', Validators.required),
+    password : new FormControl('', Validators.required),
   });
+
   register(){
     if (this.registerForm.invalid) return;
 
-    const { userName, passWord } = this.registerForm.value;
+    const { username, password } = this.registerForm.value;
 
     this.http.post<any>('http://localhost:8080/auth/register', {
-      username: userName,
-      password: passWord
+      username: username,
+      password: password
     }).subscribe({
       next: res => {
         this.auth.setToken(res.accessToken);
         this.router.navigate(["/todo"])
       },
-      error: () => alert('Register failed')
+      error: err => alert(err.error)
     });
   }
+
   login() {
     if (this.loginForm.invalid) return;
 
-    const { userName, passWord } = this.loginForm.value;
+    const { username, password } = this.loginForm.value;
 
     this.http.post<any>('http://localhost:8080/auth/login', {
-      username: userName,
-      password: passWord
+      username: username,
+      password: password
     }).subscribe({
       next: res => {
         this.auth.setToken(res.accessToken);
+        this.loggedIn.set(true);
         this.router.navigate(["/todo"])
       },
       error: () => alert('Login failed')
@@ -80,7 +90,9 @@ export class App {
 
   logout() {
     this.auth.logout();
-    this.router.navigate(['/']);
+    this.registered = false
+    this.loginForm.reset();
+    this.registerForm.reset();
   }
 
 }
