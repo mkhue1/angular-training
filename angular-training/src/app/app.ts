@@ -44,6 +44,9 @@ export class App {
   navigateTodo() {
     this.router.navigate(["/todo"])
   }
+  navigateShop(){
+    this.router.navigate(["/product"])
+  }
   loginForm = new FormGroup({
     username: new FormControl('', Validators.required),
     password : new FormControl('', Validators.required)

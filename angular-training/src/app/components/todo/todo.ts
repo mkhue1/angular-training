@@ -71,7 +71,6 @@ export class TodoComponent implements OnInit{
           this.searchText().toLowerCase()
         );
 
-      // 2. Filter theo trạng thái
       const matchStatus =
         this.statusFilter() === 'all' ||
         (this.statusFilter() === 'done' && todo.completed) ||

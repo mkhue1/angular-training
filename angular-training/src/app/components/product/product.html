@@ -1,0 +1,31 @@
+<div class = "products">
+  <table class = "table table-bordered align-middle">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Product name</th>
+      <th>Price</th>
+      <th>Description</th>
+      <th>Quantity</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (product of productList(); track product.id; let i = $index){
+        <tr class = "product">
+          <td>{{ i + 1}}</td>
+          <td> {{product.productName}} </td>
+          <td> {{ product.price | currency:'VND':'symbol':'1.0-0' }} </td>
+          <td> {{product.description}} </td>
+          <td> {{product.quantity}} </td>
+          @if (auth.isAdmin()){
+            <td><button class="btn btn-danger btn-light" (click) = editProduct(product.id!)> <mat-icon>edit</mat-icon></button></td>
+            <td><button class="btn btn-danger btn-sm" (click) = deleteProduct(product.id!)> <mat-icon>delete</mat-icon></button></td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+  @if(auth.isAdmin()){
+    <button mat-fab type="button" class="product-submit" (click) = openSheet()><mat-icon>add</mat-icon></button>
+  }
+</div>

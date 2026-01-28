@@ -7,4 +7,9 @@ export const routes: Routes = [
         loadComponent: () => import ('./components/todo/todo').then(m=>m.TodoComponent),
         canActivate: [authGuard]
     },
+    {
+      path: "product",
+      loadComponent: () => import ('./components/product/product').then(m=>m.ProductComponent),
+      canActivate: [authGuard]
+    },
 ];
