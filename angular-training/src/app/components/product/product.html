@@ -1,4 +1,10 @@
 <div class = "products">
+  <input
+    type="text"
+    placeholder="Search product..."
+    class="filter-search"
+    (input)="searchText.set($any($event.target).value)"
+  />
   <table class = "table table-bordered align-middle">
     <thead>
     <tr>
@@ -7,16 +13,26 @@
       <th>Price</th>
       <th>Description</th>
       <th>Quantity</th>
+      <th>Image</th>
     </tr>
     </thead>
     <tbody>
-      @for (product of productList(); track product.id; let i = $index){
+      @for (product of filteredProduct(); track product.id; let i = $index){
         <tr class = "product">
           <td>{{ i + 1}}</td>
           <td> {{product.productName}} </td>
           <td> {{ product.price | currency:'VND':'symbol':'1.0-0' }} </td>
           <td> {{product.description}} </td>
           <td> {{product.quantity}} </td>
+          <td class="image-cell">
+            @if (product.image) {
+              <img
+                [src]="product.image"
+                alt="product image"
+                class="product-image"
+              />
+            }
+          </td>
           @if (auth.isAdmin()){
             <td><button class="btn btn-danger btn-light" (click) = editProduct(product.id!)> <mat-icon>edit</mat-icon></button></td>
             <td><button class="btn btn-danger btn-sm" (click) = deleteProduct(product.id!)> <mat-icon>delete</mat-icon></button></td>

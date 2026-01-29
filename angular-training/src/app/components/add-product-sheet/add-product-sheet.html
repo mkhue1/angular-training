@@ -3,7 +3,6 @@
     <mat-form-field appearance="outline" class="full-width field">
       <mat-label>Product name</mat-label>
       <input matInput formControlName="productName" />
-
       <mat-error *ngIf="productList.get('productName')?.hasError('required')">Name is required</mat-error>
       <mat-hint>Type the product name</mat-hint>
     </mat-form-field>
@@ -34,6 +33,34 @@
       <mat-error *ngIf="productList.get('quantity')?.hasError('min')">Quantity should be higher than 0</mat-error>
       <mat-hint>Type the quantity</mat-hint>
     </mat-form-field>
+
+    <div class="image-upload">
+      <img
+        *ngIf="previewImage()"
+        [src]="previewImage()"
+        class="preview-image"
+      />
+
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="fileInput.click()"
+      >
+        Choose Image
+      </button>
+
+      <input
+        type="file"
+        accept="image/*"
+        hidden
+        #fileInput
+        (change)="onFileSelected($event)"
+      />
+
+      <mat-error *ngIf="productList.get('image')?.hasError('required')">
+        Image is required
+      </mat-error>
+    </div>
   </form>
 </mat-dialog-content>
 

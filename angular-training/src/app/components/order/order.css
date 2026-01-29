@@ -1,0 +1,29 @@
+.order {
+  padding: 10px 15px;
+  background-color: #FFF;
+  border-bottom: 1px solid #DDD;
+}
+
+.order:nth-child(even) {
+  background-color: #EEE;
+}
+
+.order:last-of-type {
+  border-bottom: 0;
+}
+
+.order.id {
+  flex: 1 1 50px;
+}
+
+.order.content {
+  display: block;
+  width: 100%;
+}
+
+.order-submit {
+  position: absolute;
+  bottom: 30px;
+  right: 45px;
+}
+

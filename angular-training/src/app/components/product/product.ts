@@ -1,4 +1,4 @@
-import {Component, signal, inject, OnInit} from '@angular/core';
+import {Component, signal, inject, OnInit, computed} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AuthService} from '../../service/auth-service';
 import {MatIconModule} from '@angular/material/icon';
@@ -8,7 +8,7 @@ import {MatDialogModule, MatDialog} from '@angular/material/dialog';
 import {AddProductSheet} from '../add-product-sheet/add-product-sheet';
 import {ProductService} from '../../service/product-service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {AddTodoSheetComponent} from '../add-todo-sheet/add-todo-sheet';
+
 
 
 export interface Product{
@@ -17,6 +17,7 @@ export interface Product{
   price: number;
   description: string;
   quantity: number;
+  image: string;
 }
 
 @Component({
@@ -31,8 +32,11 @@ export class ProductComponent implements OnInit{
   dialog = inject(MatDialog);
   productService = inject(ProductService);
   snackBar = inject(MatSnackBar);
-
+  searchText = signal('');
   productList = signal<Product[]>([]);
+  filteredProduct = computed(() => this.productList().filter(
+    p => p.productName.toLowerCase().includes(this.searchText().toLowerCase())));
+
   openSheet(){
     const sheetRef = this.dialog.open(AddProductSheet);
     sheetRef.afterClosed().subscribe(product => {
