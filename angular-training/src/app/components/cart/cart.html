@@ -1,0 +1,43 @@
+<div class = "carts">
+  <table class = "table table-bordered align-middle">
+    <thead>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Subtotal</th>
+    </tr>
+    </thead>
+
+    <tbody>
+      @for (item of cart(); track  item.productId){
+        <tr class = "cart">
+          <td>{{ item.productName }}</td>
+          <td class="qty-cell">
+            <button mat-icon-button
+                    color="primary"
+                    (click)="decrease(item)">
+              <mat-icon>remove</mat-icon>
+            </button>
+
+            <span class="qty">{{ item.quantity }}</span>
+
+            <button mat-icon-button
+                    color="primary"
+                    [disabled]="item.quantity >= item.stock"
+                    (click)="increase(item)">
+              <mat-icon>add</mat-icon>
+            </button>
+          </td>
+          <td>{{ item.subTotal * item.quantity | currency:'VND' }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<hr />
+
+<b>Total: {{ total() | currency:'VND' }}</b>
+<button mat-fab type="button" class="product-submit" [hidden]="cart().length === 0" (click)=submitOrder() >Submit</button>
+
+

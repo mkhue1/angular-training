@@ -1,0 +1,47 @@
+@if (order()) {
+  <div class="order-detail">
+
+    <h3 class="order-title">
+      Order #{{ order()!.id }}
+    </h3>
+
+    <div class="order-meta">
+      <span class="status" [class.new]="order()!.status === 'NEW'">
+        {{ order()!.status }}
+      </span>
+      <span class="date">
+        {{ order()!.createdAt | date:'dd/MM/yyyy HH:mm' }}
+      </span>
+    </div>
+
+    <table class="order-items">
+      <thead>
+      <tr>
+        <th>Product</th>
+        <th>Qty</th>
+        <th>Subtotal</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (item of order()!.items; track item.productId) {
+          <tr>
+            <td>{{ item.productName }}</td>
+            <td class="qty">{{ item.quantity }}</td>
+            <td class="price">
+              {{ item.subtotal | currency:'VND':'symbol':'1.0-0' }}
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <div class="order-total">
+      Total:
+      <span>
+        {{ order()!.totalAmount | currency:'VND':'symbol':'1.0-0' }}
+      </span>
+    </div>
+
+  </div>
+}
+

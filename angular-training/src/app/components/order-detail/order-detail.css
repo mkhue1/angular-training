@@ -1,0 +1,61 @@
+.order-detail {
+  padding: 16px;
+  max-width: 600px;
+}
+
+.order-title {
+  margin-bottom: 8px;
+}
+
+.order-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #555;
+}
+
+.status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: #e0e0e0;
+  font-weight: 500;
+}
+
+.status.new {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.order-items {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+
+.order-items th,
+.order-items td {
+  padding: 8px 6px;
+  border-bottom: 1px solid #ddd;
+}
+
+.order-items th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.qty {
+  text-align: center;
+}
+
+.price {
+  text-align: right;
+  font-weight: 500;
+}
+
+.order-total {
+  text-align: right;
+  font-size: 18px;
+  font-weight: bold;
+}
