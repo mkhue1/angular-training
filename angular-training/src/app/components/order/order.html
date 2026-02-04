@@ -9,21 +9,18 @@
     </tr>
     </thead>
     <tbody>
-      @for (order of orderList(); track order.id; let i = $index){
+      @for (order of orders(); track order.id; let i = $index){
         <tr class = "order">
-          <td> {{order.id}} </td>
-          <td> {{ order.price | currency:'VND':'symbol':'1.0-0' }} </td>
-          <td> {{order.createdAt}} </td>
+          <td> {{i+1}} </td>
+          <td> {{ order.totalAmount | currency:'VND':'symbol':'1.0-0' }} </td>
+          <td> {{ order.createdAt | date:'dd/MM/yyyy HH:mm:ss' }} </td>
           <td> {{order.status}} </td>
           @if (auth.isAdmin()){
-            <td><button class="btn btn-danger btn-light" > <mat-icon>edit</mat-icon></button></td>
-            <td><button class="btn btn-danger btn-sm" > <mat-icon>delete</mat-icon></button></td>
+            <td><button class="btn btn-danger btn-sm" (click)="deleteProduct(order.id!)"> <mat-icon>delete</mat-icon></button></td>
           }
+          <button mat-button color="primary" (click)="openDetail(order.id!)"> View </button>
         </tr>
       }
     </tbody>
   </table>
-  @if(auth.isAdmin()){
-    <button mat-fab type="button" class="order-submit" (click) = openSheet()><mat-icon>add</mat-icon></button>
-  }
 </div>

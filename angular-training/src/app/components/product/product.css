@@ -22,9 +22,19 @@
 }
 
 .product-submit {
-  position: absolute;
-  bottom: 30px;
-  right: 45px;
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  appearance: none;
+  border: none;
+  outline: none;
+  background: none;
+
+  margin: 15px auto;
+
+  padding: 10px 15px;
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .filter-search {

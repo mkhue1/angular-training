@@ -3,11 +3,6 @@ import {authGuard} from './auth-guard';
 
 export const routes: Routes = [
     {
-        path: "todo",
-        loadComponent: () => import ('./components/todo/todo').then(m=>m.TodoComponent),
-        canActivate: [authGuard]
-    },
-    {
       path: "product",
       loadComponent: () => import ('./components/product/product').then(m=>m.ProductComponent),
       canActivate: [authGuard]
@@ -15,6 +10,11 @@ export const routes: Routes = [
     {
       path: "order",
       loadComponent: () => import ('./components/order/order').then(m=>m.OrderComponent),
+      canActivate: [authGuard]
+    },
+    {
+      path: "cart",
+      loadComponent: () => import ('./components/cart/cart').then(m=>m.Cart),
       canActivate: [authGuard]
     },
 ];

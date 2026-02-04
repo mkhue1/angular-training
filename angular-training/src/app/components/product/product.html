@@ -33,6 +33,7 @@
               />
             }
           </td>
+          <td><button class="btn btn-secondary" [hidden]="orderService.availableStock(product) <= 0" (click) = addProduct(product.id!)><mat-icon>add</mat-icon></button></td>
           @if (auth.isAdmin()){
             <td><button class="btn btn-danger btn-light" (click) = editProduct(product.id!)> <mat-icon>edit</mat-icon></button></td>
             <td><button class="btn btn-danger btn-sm" (click) = deleteProduct(product.id!)> <mat-icon>delete</mat-icon></button></td>

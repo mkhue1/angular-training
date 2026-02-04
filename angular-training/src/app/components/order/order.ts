@@ -1,17 +1,33 @@
-import {Component, inject, signal} from '@angular/core';
-import {CurrencyPipe} from '@angular/common';
+import {Component, inject, OnInit, signal} from '@angular/core';
+import {CurrencyPipe, DatePipe} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {AuthService} from '../../service/auth-service';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {OrderService} from '../../service/order-service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {AddProductSheet} from '../add-product-sheet/add-product-sheet';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {OrderDetailComponent} from '../order-detail/order-detail';
 
 export interface Order{
-  id: number;
-  createdAt: Date;
-  price: number;
-  status: 'NEW' | 'CONFIRMED' | 'CANCELLED'
+  id?: number;
+  createdAt: string;
+  totalAmount: number;
+  status?: 'NEW' | 'CONFIRMED' | 'CANCELLED'
+}
+
+export interface OrderItem {
+  productId: number;
+  productName: string;
+  subTotal: number;
+  quantity: number;
+  stock: number;
+}
+
+export interface OrderRequest {
+  items: {
+    productId: number;
+    quantity: number;
+  }[];
 }
 
 @Component({
@@ -22,18 +38,41 @@ export interface Order{
     CurrencyPipe,
     MatButtonModule,
     MatIconModule,
-    MatDialogModule
+    DatePipe,
+    MatDialogModule,
   ],
   standalone: true
 })
-export class OrderComponent{
+export class OrderComponent implements  OnInit{
   auth = inject(AuthService);
-  dialog = inject(MatDialog);
+  orderService = inject(OrderService);
   snackBar = inject(MatSnackBar);
-  orderList = signal<Order[]>([]);
+  dialog = inject(MatDialog);
+  orders = signal<Order[]>([]);
 
-  openSheet(){
-    const sheetRef = this.dialog.open(AddProductSheet);
+  ngOnInit() {
+    this.orderService.getOrders().subscribe(data => {
+      this.orders.set(data);
+    });
   }
 
+  deleteProduct(id: number){
+    this.orderService.deleteProduct(id).subscribe(() => {
+      this.orders.update(list =>
+        list.filter(todo => todo.id !== id)
+      );
+      this.snackBar.open(
+        'Delete successfully ✅',
+        'OK',
+        { duration: 3000, horizontalPosition: 'right', verticalPosition: 'top' }
+      );
+    });
+  }
+
+  openDetail(orderId: number) {
+    this.dialog.open(OrderDetailComponent, {
+      width: '700px',
+      data: orderId
+    });
+  }
 }

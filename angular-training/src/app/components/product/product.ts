@@ -8,8 +8,8 @@ import {MatDialogModule, MatDialog} from '@angular/material/dialog';
 import {AddProductSheet} from '../add-product-sheet/add-product-sheet';
 import {ProductService} from '../../service/product-service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-
-
+import {Router} from '@angular/router';
+import {OrderService} from '../../service/order-service';
 
 export interface Product{
   id?:number;
@@ -32,6 +32,8 @@ export class ProductComponent implements OnInit{
   dialog = inject(MatDialog);
   productService = inject(ProductService);
   snackBar = inject(MatSnackBar);
+  router = inject(Router);
+  orderService = inject(OrderService);
   searchText = signal('');
   productList = signal<Product[]>([]);
   filteredProduct = computed(() => this.productList().filter(
@@ -57,6 +59,13 @@ export class ProductComponent implements OnInit{
       })
     });
   }
+
+  addProduct(id: number) {
+    const product = this.productList().find(t => t.id === id);
+    if(!product) return;
+    this.orderService.addToCart(product);
+  }
+
   ngOnInit() {
     this.productService.getProductList().subscribe(data => {
       this.productList.set(data);
@@ -98,4 +107,5 @@ export class ProductComponent implements OnInit{
       });
     });
   }
+
 }
